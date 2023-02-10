@@ -7,9 +7,7 @@ const cx = classNames.bind(styles)
 function App() {
   return (
     <div className={cx('app')}>
-      <div className={cx('container')}>
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
     </div>
   )
 }
