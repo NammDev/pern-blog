@@ -1,9 +1,12 @@
-import Button from './components/Button/Button'
+import { RouterProvider } from 'react-router-dom'
+import router from './routes'
 
 function App() {
   return (
-    <div>
-      <Button text='Xin chao' />
+    <div className='app'>
+      <div className='container'>
+        <RouterProvider router={router} />
+      </div>
     </div>
   )
 }
