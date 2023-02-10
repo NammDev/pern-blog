@@ -1,6 +1,6 @@
 import { MainLayout, FragmentLayout } from '~/layouts'
 import { Home, Login, Register, Single, Write } from '~/pages'
-import { PublicRoute, PrivateRoute } from './proteced'
+import { PublicRoute, PrivateRoute } from './protected'
 
 const routes = [
   { path: '/', page: Home, layout: MainLayout, protected: PublicRoute },
