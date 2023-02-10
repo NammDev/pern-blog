@@ -7,21 +7,41 @@ import Button from '~/components/Button/Button'
 const cx = classNames.bind(styles)
 
 function Register() {
-  const [inputs, setInputs] = useState({
-    username: '',
-    email: '',
-    password: '',
-  })
-  const [err, setError] = useState(null)
-
   const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(inputs)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [err, setErr] = useState(null)
+
+  const postApi = async () => {
+    // const data = await postRegister(email, username, password)
+    // if (data && data.EC === 0) {
+    //   navigate('/login')
+    // } else {
+    //   setErr(data.EM)
+    // }
+    navigate('/login')
   }
 
-  const handleSubmit = (e) => {}
+  const validate = (email, username, password) => {
+    const isValidateEmail = email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    const isValidateusername = username.length >= 3
+    const isValidatePassword = password
+    if (!isValidateEmail) {
+      setErr('Invalid Email')
+    } else if (!isValidateusername) {
+      setErr('Invalid Username')
+    } else if (!isValidatePassword) {
+      setErr('Please enter password')
+    }
+    return isValidateEmail && isValidateusername && isValidatePassword
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    validate(email, username, password) && postApi()
+  }
 
   return (
     <div className={cx('auth')}>
@@ -30,19 +50,32 @@ function Register() {
         <input
           required
           type='text'
-          placeholder='username'
-          name='username'
-          onChange={handleChange}
+          placeholder='Username'
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value)
+          }}
         />
-        <input required type='email' placeholder='email' name='email' onChange={handleChange} />
+        <input
+          required
+          type='email'
+          placeholder='email'
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+          }}
+        />
         <input
           required
           type='password'
           placeholder='password'
-          name='password'
-          onChange={handleChange}
+          autoComplete='off'
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value)
+          }}
         />
-        <Button onClick={handleSubmit} text='Register' />
+        <Button onClick={handleRegister} text='Register' />
         {err && <p>{err}</p>}
         <span>
           Do you have an account? <Link to='/login'>Login</Link>
