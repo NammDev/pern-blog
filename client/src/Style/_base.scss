@@ -1,0 +1,32 @@
+@import 'normalize.css';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
