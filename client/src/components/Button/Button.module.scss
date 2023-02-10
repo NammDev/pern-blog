@@ -11,6 +11,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
+  border-radius: 4px;
   cursor: pointer;
   & + .wrapper {
     margin-left: 16px;
@@ -29,7 +30,6 @@ svg + .title,
 .primary {
   min-width: 100px;
   min-height: 36px;
-  border-radius: 4px;
   padding: 10px;
   border: none;
   background-color: teal;
@@ -40,14 +40,15 @@ svg + .title,
 }
 
 .secondary {
-  min-width: 88px;
-  min-height: 28px;
-  padding: 0 10px;
-  border: 1px solid $color-primary;
-  border-radius: 4px;
-  color: $color-primary;
-  background-color: $white;
+  width: max-content;
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid teal;
+  color: teal;
+
   &:hover {
-    background-color: rgba(254, 44, 85, 0.06);
+    border: 1px solid white;
+    background-color: $lightGreen;
+    color: black;
   }
 }
