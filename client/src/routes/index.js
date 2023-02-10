@@ -1,39 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { MainLayout, FragmentLayout } from '~/layouts'
-import { Home, Login, Register, Single, Write } from '~/pages'
+import routes from './routes'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainLayout />,
-    children: [
-      {
-        path: '/',
-        element: <Home />,
-      },
-      {
-        path: '/post/:id',
-        element: <Single />,
-      },
-      {
-        path: '/write',
-        element: <Write />,
-      },
-    ],
-  },
-  {
-    element: <FragmentLayout />,
-    children: [
-      {
-        path: '/register',
-        element: <Register />,
-      },
-      {
-        path: '/login',
-        element: <Login />,
-      },
-    ],
-  },
-])
+const router = createBrowserRouter(
+  routes.map((route) => {
+    const Protected = route.protected
+    const Layout = route.layout
+    const Page = route.page
+    return {
+      path: route.path,
+      element: (
+        <Protected>
+          <Layout>
+            <Page />
+          </Layout>
+        </Protected>
+      ),
+    }
+  })
+)
 
 export default router

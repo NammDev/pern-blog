@@ -2,11 +2,11 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 
-function MainLayout() {
+function MainLayout({ children }) {
   return (
     <>
       <Navbar />
-      <Outlet />
+      {children}
       <Footer />
     </>
   )
