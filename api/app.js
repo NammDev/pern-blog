@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import configFile from './config/index.js'
+import initRoutes from './routes/index.js'
 dotenv.config()
 
 // Setup
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Routes
+initRoutes(app)
 
 // Listen
 const port = process.env.PORT || 8800
