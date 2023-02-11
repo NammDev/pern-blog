@@ -7,7 +7,7 @@ import styles from './Navbar.module.scss'
 const cx = classNames.bind(styles)
 
 const Navbar = () => {
-  const currentUser = false
+  const currentUser = true
   const logout = () => {
     console.log('Logout')
   }

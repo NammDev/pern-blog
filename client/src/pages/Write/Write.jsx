@@ -10,6 +10,7 @@ const cx = classNames.bind(styles)
 function Write() {
   const [title, setTitle] = useState('')
   const [value, setValue] = useState('')
+  const [file, setFile] = useState(null)
   const [cat, setCat] = useState('')
 
   const navigate = useNavigate()
