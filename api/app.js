@@ -1,17 +1,26 @@
+// Install npm
+import dotenv from 'dotenv'
+import express from 'express'
+import cors from 'cors'
+import configFile from './config/index.js'
+dotenv.config()
+
 // Setup
-const express = require('express')
+const config = configFile[process.env.ENVIRONMENT || development]
 const app = express()
-const config = require('./config')[process.env.NODE_ENV || 'development']
 const log = config.log()
 
 // Connect DB
 
 // Middleware
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// Routes
+
 // Listen
-port = process.env.PORT || 8800
+const port = process.env.PORT || 8800
 app.listen(port, () => {
   log.info(`Api app listening on port ${port}`)
 })

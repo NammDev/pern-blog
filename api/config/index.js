@@ -1,13 +1,15 @@
 // Load package.json
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 const pjs = require('../package.json')
-const bunyan = require('bunyan')
+import bunyan from 'bunyan'
 
 // Get some meta info from the package.json
 const { name, version } = pjs
 
 const getLogger = (serviceName) => bunyan.createLogger({ name: `${serviceName}` })
 
-module.exports = {
+const config = {
   development: {
     name,
     version,
@@ -37,3 +39,5 @@ module.exports = {
     log: () => getLogger(name),
   },
 }
+
+export default config
