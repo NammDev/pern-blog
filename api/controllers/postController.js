@@ -1,4 +1,15 @@
-export const getPosts = (req, res) => {}
+import db from '../config/db.js'
+export const getPosts = (req, res) => {
+  db.connect(function (err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack)
+      return
+    }
+
+    console.log('connected as id ' + db.threadId)
+  })
+  res.send('get Post')
+}
 
 export const getPost = (req, res) => {}
 

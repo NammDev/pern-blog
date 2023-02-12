@@ -15,14 +15,10 @@ const config = {
     version,
     serviceTimeout: 30,
     sql: {
-      options: {
-        host: 'localhost',
-        port: 5432,
-        database: 'sequelize_course',
-        dialect: 'postgres',
-        username: 'postgres',
-        password: 'namkhanh',
-      },
+      host: 'localhost',
+      database: 'blog_app',
+      user: 'root',
+      password: 'namkhanh',
     },
     log: () => getLogger(name),
   },

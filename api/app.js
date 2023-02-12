@@ -11,8 +11,6 @@ const config = configFile[process.env.ENVIRONMENT || development]
 const app = express()
 const log = config.log()
 
-// Connect DB
-
 // Middleware
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
