@@ -1,6 +1,12 @@
 import bcrypt from 'bcryptjs'
 import { getUserByEmail, getUserByEmailName, createNewUser } from '../services/authService.js'
 import { jwtGeneratorAccess, jwtGeneratorRefresh } from '../utils/jwtGenerator.js'
+import { catchError } from '../middlewares/authorize.js'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+dotenv.config()
+
+let refreshTokens = []
 
 export const register = async (req, res) => {
   try {
@@ -42,15 +48,46 @@ export const login = async (req, res) => {
     const accessToken = jwtGeneratorAccess(user[0].id)
     const refreshToken = jwtGeneratorRefresh(user[0].id)
 
+    // 4.1. Add refresh token to array
+    refreshTokens.push(refreshToken)
+
     // 5. Send respond
     res.json({ accessToken, refreshToken, ...user[0] })
   } catch (error) {
+    console.log(error)
     res.status(500).json(error)
   }
 }
 
-export const logout = (req, res) => {}
+export const logout = (req, res) => {
+  const refreshToken = req.body.refreshToken
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken)
+  res.status(200).json('You logged out successfully.')
+}
 
 export const refresh = (req, res) => {
-  // if everything is ok, create new access token, refresh token and send to user
+  //take the refresh token from the user
+  const refreshToken = req.body.refreshToken
+
+  //send error if there is no token or it's invalid
+  if (!refreshToken) return res.status(401).json('You are not authenticated!')
+
+  // Check array token have token which user send or not
+  if (!refreshTokens.includes(refreshToken))
+    return res.status(403).json('Refresh token is not valid!')
+
+  // verify token
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.SECRET_KEY_REFRESH)
+    //remove old refresh token
+    // refreshTokens = refreshTokens.filter((token) => token !== refreshToken)
+    // const newRefreshToken = generateRefreshToken(user)
+    // refreshTokens.push(newRefreshToken)
+    const accessToken = jwtGeneratorAccess(decoded.id)
+    res.status(200).json({
+      accessToken,
+    })
+  } catch (error) {
+    catchError(err, res)
+  }
 }
