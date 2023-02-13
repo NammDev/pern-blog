@@ -3,6 +3,7 @@ import styles from './Auth.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Button from '~/components/Button/Button'
+import { postRegister } from '~/services/auth'
 
 const cx = classNames.bind(styles)
 
@@ -15,13 +16,13 @@ function Register() {
   const [err, setErr] = useState(null)
 
   const postApi = async () => {
-    // const data = await postRegister(email, username, password)
-    // if (data && data.EC === 0) {
-    //   navigate('/login')
-    // } else {
-    //   setErr(data.EM)
-    // }
-    navigate('/login')
+    try {
+      const data = await postRegister(email, username, password)
+      console.log(data)
+      navigate('/login')
+    } catch (err) {
+      setErr(err.response.data)
+    }
   }
 
   const validate = (email, username, password) => {
