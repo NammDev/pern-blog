@@ -3,6 +3,7 @@ import classNames from 'classnames/bind'
 import styles from './Auth.module.scss'
 import { useState } from 'react'
 import Button from '~/components/Button/Button'
+import { postLogin } from '~/services/auth'
 
 const cx = classNames.bind(styles)
 
@@ -13,14 +14,15 @@ function Login() {
   const [err, setErr] = useState(null)
 
   const postApi = async () => {
-    // const data = await postLogin(email, password)
-    // if (data && data.EC === 0) {
-    //   dispatch(doLogin(data.DT))
-    //   navigate('/')
-    // } else {
-    //   setErr(err.response.data)
-    // }
-    navigate('/')
+    try {
+      const data = await postLogin(email, password)
+      const { accessToken, refreshToken } = data
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
+      navigate('/')
+    } catch (err) {
+      setErr(err.response.data)
+    }
   }
 
   const validate = (email, password) => {
