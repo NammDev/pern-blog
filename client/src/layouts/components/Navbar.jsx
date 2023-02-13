@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import Logo from '~/assets/img/logo.png'
 import classNames from 'classnames/bind'
 import styles from './Navbar.module.scss'
+import { removeUser } from '~/utils/token'
 
 const cx = classNames.bind(styles)
 
 const Navbar = () => {
   const currentUser = true
+
   const logout = () => {
-    console.log('Logout')
+    removeUser()
   }
 
   return (

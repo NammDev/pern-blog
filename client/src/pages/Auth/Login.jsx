@@ -4,6 +4,7 @@ import styles from './Auth.module.scss'
 import { useState } from 'react'
 import Button from '~/components/Button/Button'
 import { postLogin } from '~/services/auth'
+import { setUser } from '~/utils/token'
 
 const cx = classNames.bind(styles)
 
@@ -16,9 +17,7 @@ function Login() {
   const postApi = async () => {
     try {
       const data = await postLogin(email, password)
-      const { accessToken, refreshToken } = data
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+      setUser(data)
       navigate('/')
     } catch (err) {
       setErr(err.response.data)
