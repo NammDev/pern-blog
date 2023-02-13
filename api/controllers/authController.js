@@ -21,7 +21,6 @@ export const register = async (req, res) => {
     // 5. Send respond
     return res.status(200).json('User has been created.')
   } catch (error) {
-    console.log(error)
     res.status(500).json(error)
   }
 }
@@ -46,7 +45,6 @@ export const login = async (req, res) => {
     // 5. Send respond
     res.json({ accessToken, refreshToken, ...user[0] })
   } catch (error) {
-    console.log(error)
     res.status(500).json(error)
   }
 }

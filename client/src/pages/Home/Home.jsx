@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
-import { Link } from 'react-router-dom'
+import axios from '~/utils/axiosCustomize'
 import Button from '~/components/Button/Button'
 
 const cx = classNames.bind(styles)
@@ -32,6 +34,19 @@ function Home() {
       img: 'https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     },
   ]
+
+  const fetchData = async () => {
+    try {
+      const data = await axios.get('/api/posts')
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const getText = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html')
