@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 require('dotenv').config()
 
 // This middleware will continue on if the token is inside the local storage
-module.exports = async (req, res, next) => {
+const authorize = async (req, res, next) => {
   // Get token from header
   const token = req.header('Authorization')
 
@@ -21,3 +21,5 @@ module.exports = async (req, res, next) => {
     res.status(401).json({ msg: 'Token is not valid' })
   }
 }
+
+export default authorize

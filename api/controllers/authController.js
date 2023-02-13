@@ -4,7 +4,6 @@ export const register = async (req, res) => {
   try {
     const rows = await getAllUsers()
     res.json(rows)
-
     // // 1. Destructure the req.body (name, email, password)
     // const { name, email, password } = req.body
     // // 2. Check if user exist (if true throw error)
@@ -32,3 +31,7 @@ export const register = async (req, res) => {
 export const login = (req, res) => {}
 
 export const logout = (req, res) => {}
+
+export const refresh = (req, res) => {
+  // if everything is ok, create new access token, refresh token and send to user
+}
