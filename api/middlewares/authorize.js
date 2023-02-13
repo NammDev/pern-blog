@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // This middleware will continue on if the token is inside the local storage
 const authorize = async (req, res, next) => {
@@ -14,7 +15,7 @@ const authorize = async (req, res, next) => {
   // Verify token
   try {
     //it is going to give use the user id (user:{id: user.id})
-    const verify = jwt.verify(token, process.env.SECRET_KEY)
+    const verify = jwt.verify(token, process.env.SECRET_KEY_ACCESS)
     req.user = verify.user
     next()
   } catch (err) {
