@@ -25,13 +25,13 @@ export const getAllPostsByCat = (cat) =>
 export const getPostById = (id) =>
   new Promise((resolve, reject) => {
     const q =
-      'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN post p ON u.id = p.uid WHERE p.id = ? '
+      'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM user u JOIN post p ON u.id = p.uid WHERE p.id = ? '
 
-    db.query(q, [id], (err, data) => {
+    db.query(q, [id], (err, rows) => {
       if (err) {
         reject(err)
       }
-      resolve(rows)
+      resolve(rows[0])
     })
   })
 
@@ -47,7 +47,7 @@ export const addPost = ({ title, desc, img, cat, date, uid }) =>
     })
   })
 
-export const deletePost = (pid, uid) =>
+export const deletePostById = (pid, uid) =>
   new Promise((resolve, reject) => {
     const q = 'DELETE FROM post WHERE `id` = ? AND `uid` = ?'
     db.query(q, [pid, uid], (err, data) => {

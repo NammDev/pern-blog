@@ -1,4 +1,9 @@
-import { getAllPosts, getAllPostsByCat, getPostById } from '../services/postService.js'
+import {
+  getAllPosts,
+  getAllPostsByCat,
+  getPostById,
+  deletePostById,
+} from '../services/postService.js'
 
 export const getPosts = async (req, res) => {
   try {
@@ -29,7 +34,7 @@ export const addPost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   try {
-    const data = await deletePost(req.params.id, req.user.id)
+    const data = await deletePostById(req.params.id, req.user.id)
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)

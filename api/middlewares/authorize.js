@@ -26,7 +26,7 @@ const authorize = async (req, res, next) => {
     //it is going to give use the user id (user:{id: user.id})
     const token = authHeader.split(' ')[1]
     const verify = jwt.verify(token, process.env.SECRET_KEY_ACCESS)
-    req.user = verify.user
+    req.user = verify
     next()
   } catch (err) {
     catchError(err, res)
