@@ -1,17 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '~/assets/img/logo.png'
 import classNames from 'classnames/bind'
 import styles from './Navbar.module.scss'
-import { removeUser } from '~/utils/token'
+import { useContext } from 'react'
+import { AuthContext } from '~/context/authContext'
 
 const cx = classNames.bind(styles)
 
 const Navbar = () => {
-  const currentUser = true
+  const { currentUser, logout } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  const logout = () => {
-    removeUser()
+  const postApi = async () => {
+    try {
+      await logout()
+      navigate('/login')
+    } catch (err) {
+      console.log(err.response.data)
+    }
   }
 
   return (
@@ -41,7 +48,7 @@ const Navbar = () => {
           <h6>FOOD</h6>
         </Link>
         <span>{currentUser?.username}</span>
-        {currentUser ? <span onClick={logout}>Logout</span> : <Link to='/login'>Login</Link>}
+        {currentUser ? <span onClick={postApi}>Logout</span> : <Link to='/login'>Login</Link>}
         <span className={cx('write')}>
           <Link to='/write'>Write</Link>
         </span>

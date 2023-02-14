@@ -17,9 +17,8 @@ export const postRegister = async (email, username, password) => {
   return res
 }
 
-export const postLogout = async (email, refresh_token) => {
+export const postLogout = async (refresh_token) => {
   const res = await axios.post(`/api/auth/logout`, {
-    email,
     refresh_token,
   })
   return res

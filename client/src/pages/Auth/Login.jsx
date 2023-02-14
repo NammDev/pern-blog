@@ -1,10 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './Auth.module.scss'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '~/components/Button/Button'
-import { postLogin } from '~/services/auth'
-import { setUser } from '~/utils/token'
+import { AuthContext } from '~/context/authContext'
 
 const cx = classNames.bind(styles)
 
@@ -14,10 +13,11 @@ function Login() {
   const [password, setPassword] = useState('')
   const [err, setErr] = useState(null)
 
+  const { login } = useContext(AuthContext)
+
   const postApi = async () => {
     try {
-      const data = await postLogin(email, password)
-      setUser(data)
+      await login(email, password)
       navigate('/')
     } catch (err) {
       setErr(err.response.data)
