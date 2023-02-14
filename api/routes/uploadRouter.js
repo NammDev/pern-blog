@@ -1,9 +1,20 @@
 import express from 'express'
-import uploadMiddleware from '../middlewares/upload.js'
 import { uploadFile } from '../controllers/uploadController.js'
+import multer from 'multer'
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../upload/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname)
+  },
+})
+
+const upload = multer({ dest: './hehe/' })
 
 const router = express.Router()
 
-router.post('', uploadMiddleware, uploadFile)
+router.post('', upload.single('file'), uploadFile)
 
 export default router
