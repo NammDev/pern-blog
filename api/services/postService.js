@@ -1,4 +1,5 @@
 import db from '../config/db.js'
+import mysql from 'mysql'
 
 export const getAllPosts = () =>
   new Promise((resolve, reject) => {
@@ -35,7 +36,7 @@ export const getPostById = (id) =>
     })
   })
 
-export const addPost = ({ title, desc, img, cat, date, uid }) =>
+export const addPostService = ({ title, desc, img, cat, date }, uid) =>
   new Promise((resolve, reject) => {
     const q = 'INSERT INTO post(`title`, `desc`, `img`, `cat`, `date`,`uid`) VALUES (?)'
     const values = [title, desc, img, cat, date, uid]
@@ -58,11 +59,11 @@ export const deletePostById = (pid, uid) =>
     })
   })
 
-export const updatePost = ({ title, desc, img, cat, pid, uid }) =>
+export const updatePostService = ({ title, desc, img, cat }, pid, uid) =>
   new Promise((resolve, reject) => {
     const q = 'UPDATE post SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?'
-    const values = [title, desc, img, cat, pid, uid]
-    db.query(q, [values], (err, data) => {
+    const values = [title, mysql.escape(desc), img, cat, pid, uid]
+    db.query(q, values, (err, data) => {
       if (err) {
         reject(err)
       }

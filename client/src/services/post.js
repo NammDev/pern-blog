@@ -14,3 +14,13 @@ export const deletePost = async (id) => {
   const res = await axios.delete(`/api/posts/${id}`)
   return res
 }
+
+export const createPost = async (title, desc, cat, img, date) => {
+  const res = await axios.post(`/api/posts`, { title, desc, cat, img, date })
+  return res
+}
+
+export const updatePost = async (title, desc, cat, img, id) => {
+  const res = await axios.put(`/api/posts/${id}`, { title, desc, cat, img })
+  return res
+}

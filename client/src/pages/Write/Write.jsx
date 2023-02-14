@@ -7,13 +7,14 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import RadioCategory from './RadioCategory'
 import { uploadImage } from '~/services/upload'
+import { createPost, updatePost } from '~/services/post'
 
 const cx = classNames.bind(styles)
 
 function Write() {
   const state = useLocation().state
-  const [value, setValue] = useState(state?.title || '')
-  const [title, setTitle] = useState(state?.desc || '')
+  const [value, setValue] = useState(state?.desc || '')
+  const [title, setTitle] = useState(state?.title || '')
   const [file, setFile] = useState(null)
   const [cat, setCat] = useState(state?.cat || '')
 
@@ -33,24 +34,18 @@ function Write() {
   const handleClick = async (e) => {
     e.preventDefault()
     const imgUrl = await upload()
-    console.log(imgUrl)
 
     try {
-      // state
-      //   ? await axios.put(`/posts/${state.id}`, {
-      //       title,
-      //       desc: value,
-      //       cat,
-      //       img: file ? imgUrl : '',
-      //     })
-      //   : await axios.post(`/posts/`, {
-      //       title,
-      //       desc: value,
-      //       cat,
-      //       img: file ? imgUrl : '',
-      //       date: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-      //     })
-      // navigate('/')
+      const postAfterQuery = state
+        ? updatePost(title, value, cat, file ? imgUrl : '', state.id)
+        : createPost(
+            title,
+            value,
+            cat,
+            file ? imgUrl : '',
+            moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
+          )
+      navigate('/')
     } catch (err) {
       console.log(err)
     }

@@ -3,6 +3,8 @@ import {
   getAllPostsByCat,
   getPostById,
   deletePostById,
+  addPostService,
+  updatePostService,
 } from '../services/postService.js'
 
 export const getPosts = async (req, res) => {
@@ -25,7 +27,7 @@ export const getPost = async (req, res) => {
 
 export const addPost = async (req, res) => {
   try {
-    const data = await addPost(req.body)
+    const data = await addPostService(req.body, req.user.id)
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)
@@ -43,7 +45,7 @@ export const deletePost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   try {
-    const data = await updatePost(req.body, req.params.id, req.user.id)
+    const data = await updatePostService(req.body, req.params.id, req.user.id)
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)
