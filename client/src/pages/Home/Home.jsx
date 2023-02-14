@@ -1,44 +1,22 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
-import axios from '~/utils/axiosCustomize'
 import Button from '~/components/Button/Button'
+import { getPosts } from '~/services/post'
 
 const cx = classNames.bind(styles)
 
 function Home() {
-  const posts = [
-    {
-      id: 1,
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-      desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!',
-      img: 'https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      id: 2,
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-      desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!',
-      img: 'https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      id: 3,
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-      desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!',
-      img: 'https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      id: 4,
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-      desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!',
-      img: 'https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-  ]
+  const [posts, setPosts] = useState([])
+
+  const location = useLocation()
+  const category = location.search
 
   const fetchData = async () => {
     try {
-      const data = await axios.get('/api/posts')
-      console.log(data)
+      const data = await getPosts(category)
+      setPosts(data)
     } catch (err) {
       console.log(err)
     }
@@ -46,7 +24,7 @@ function Home() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [category])
 
   const getText = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html')

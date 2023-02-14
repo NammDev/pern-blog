@@ -13,7 +13,7 @@ export const getAllPosts = () =>
 
 export const getAllPostsByCat = (cat) =>
   new Promise((resolve, reject) => {
-    const q = 'SELECT * FROM posts WHERE cat=?'
+    const q = 'SELECT * FROM post WHERE cat=?'
     db.query(q, cat, (err, rows) => {
       if (err) {
         reject(err)
@@ -25,7 +25,7 @@ export const getAllPostsByCat = (cat) =>
 export const getPostById = (id) =>
   new Promise((resolve, reject) => {
     const q =
-      'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? '
+      'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN post p ON u.id = p.uid WHERE p.id = ? '
 
     db.query(q, [id], (err, data) => {
       if (err) {
@@ -37,7 +37,7 @@ export const getPostById = (id) =>
 
 export const addPost = ({ title, desc, img, cat, date, uid }) =>
   new Promise((resolve, reject) => {
-    const q = 'INSERT INTO posts(`title`, `desc`, `img`, `cat`, `date`,`uid`) VALUES (?)'
+    const q = 'INSERT INTO post(`title`, `desc`, `img`, `cat`, `date`,`uid`) VALUES (?)'
     const values = [title, desc, img, cat, date, uid]
     db.query(q, [values], (err, data) => {
       if (err) {
@@ -49,7 +49,7 @@ export const addPost = ({ title, desc, img, cat, date, uid }) =>
 
 export const deletePost = (pid, uid) =>
   new Promise((resolve, reject) => {
-    const q = 'DELETE FROM posts WHERE `id` = ? AND `uid` = ?'
+    const q = 'DELETE FROM post WHERE `id` = ? AND `uid` = ?'
     db.query(q, [pid, uid], (err, data) => {
       if (err) {
         reject(err)
@@ -60,7 +60,7 @@ export const deletePost = (pid, uid) =>
 
 export const updatePost = ({ title, desc, img, cat, pid, uid }) =>
   new Promise((resolve, reject) => {
-    const q = 'UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?'
+    const q = 'UPDATE post SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?'
     const values = [title, desc, img, cat, pid, uid]
     db.query(q, [values], (err, data) => {
       if (err) {

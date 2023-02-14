@@ -2,7 +2,7 @@ import { getAllPosts, getAllPostsByCat, getPostById } from '../services/postServ
 
 export const getPosts = async (req, res) => {
   try {
-    const data = req.query.cat ? await getAllPosts() : await getAllPostsByCat(req.query.cat)
+    const data = req.query.cat ? await getAllPostsByCat(req.query.cat) : await getAllPosts()
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)
