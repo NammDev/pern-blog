@@ -36,7 +36,7 @@ function Write() {
     const imgUrl = await upload()
 
     try {
-      const postAfterQuery = state
+      state
         ? updatePost(title, value, cat, file ? imgUrl : '', state.id)
         : createPost(
             title,
@@ -45,7 +45,7 @@ function Write() {
             file ? imgUrl : '',
             moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
           )
-      navigate('/')
+      // navigate('/')
     } catch (err) {
       console.log(err)
     }

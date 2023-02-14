@@ -37,14 +37,14 @@ function Home() {
         {posts.map((post) => (
           <div className={cx('post')} key={post.id}>
             <div className={cx('img')}>
-              <img src={post.img} alt='' />
+              <img src={`./../upload/${post.img}`} alt='' />
             </div>
             <div className={cx('content')}>
               <Link to={`/post/${post.id}`}>
                 <h1>{post.title}</h1>
               </Link>
               <p>{getText(post.desc)}</p>
-              <Button secondary text='Read More' />
+              <Button to={`/post/${post.id}`} secondary text='Read More' />
             </div>
           </div>
         ))}

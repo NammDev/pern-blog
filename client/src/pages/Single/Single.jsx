@@ -45,7 +45,7 @@ function Single() {
   return (
     <div className={cx('single')}>
       <div className={cx('content')}>
-        <img src={post.img} alt='' />
+        <img src={`./../upload/${post.img}`} alt='' />
         <div className={cx('user')}>
           {post.userImg && <img src={post.userImg} alt='' />}
           <div className='info'>
