@@ -52,7 +52,8 @@ export const login = async (req, res) => {
     refreshTokens.push(refreshToken)
 
     // 5. Send respond
-    res.json({ accessToken, refreshToken, ...user[0] })
+    const { id, username, img } = user[0]
+    res.json({ accessToken, refreshToken, id, username, email: user[0].email, img })
   } catch (error) {
     console.log(error)
     res.status(500).json(error)

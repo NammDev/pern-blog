@@ -18,7 +18,6 @@ function Register() {
   const postApi = async () => {
     try {
       const data = await postRegister(email, username, password)
-      console.log(data)
       navigate('/login')
     } catch (err) {
       setErr(err.response.data)
