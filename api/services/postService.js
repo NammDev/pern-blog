@@ -10,3 +10,62 @@ export const getAllPosts = () =>
       resolve(rows)
     })
   })
+
+export const getAllPostsByCat = (cat) =>
+  new Promise((resolve, reject) => {
+    const q = 'SELECT * FROM posts WHERE cat=?'
+    db.query(q, cat, (err, rows) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(rows)
+    })
+  })
+
+export const getPostById = (id) =>
+  new Promise((resolve, reject) => {
+    const q =
+      'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? '
+
+    db.query(q, [id], (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(rows)
+    })
+  })
+
+export const addPost = ({ title, desc, img, cat, date, uid }) =>
+  new Promise((resolve, reject) => {
+    const q = 'INSERT INTO posts(`title`, `desc`, `img`, `cat`, `date`,`uid`) VALUES (?)'
+    const values = [title, desc, img, cat, date, uid]
+    db.query(q, [values], (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      resolve('Post has been created.')
+    })
+  })
+
+export const deletePost = (pid, uid) =>
+  new Promise((resolve, reject) => {
+    const q = 'DELETE FROM posts WHERE `id` = ? AND `uid` = ?'
+    db.query(q, [pid, uid], (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      resolve('Post has been deleted!')
+    })
+  })
+
+export const updatePost = ({ title, desc, img, cat, pid, uid }) =>
+  new Promise((resolve, reject) => {
+    const q = 'UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?'
+    const values = [title, desc, img, cat, pid, uid]
+    db.query(q, [values], (err, data) => {
+      if (err) {
+        reject(err)
+      }
+      resolve('Post has been updated.')
+    })
+  })

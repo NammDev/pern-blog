@@ -10,10 +10,10 @@ import authorize from '../middlewares/authorize.js'
 
 const router = express.Router()
 
-router.get('/', authorize, getPosts)
+router.get('/', getPosts)
 router.get('/:id', getPost)
-router.post('/', addPost)
-router.delete('/:id', deletePost)
-router.put('/:id', updatePost)
+router.post('/', authorize, addPost)
+router.delete('/:id', authorize, deletePost)
+router.put('/:id', authorize, updatePost)
 
 export default router
