@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import RadioCategory from './RadioCategory'
+import { uploadImage } from '~/services/upload'
 
 const cx = classNames.bind(styles)
 
@@ -22,8 +23,8 @@ function Write() {
     try {
       const formData = new FormData()
       formData.append('file', file)
-      // const res = await axios.post('/upload', formData)
-      // return res.data
+      const res = await uploadImage(formData)
+      return res
     } catch (err) {
       console.log(err)
     }
@@ -31,7 +32,8 @@ function Write() {
 
   const handleClick = async (e) => {
     e.preventDefault()
-    // const imgUrl = await upload()
+    const imgUrl = await upload()
+    console.log(imgUrl)
 
     try {
       // state
@@ -48,7 +50,7 @@ function Write() {
       //       img: file ? imgUrl : '',
       //       date: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
       //     })
-      navigate('/')
+      // navigate('/')
     } catch (err) {
       console.log(err)
     }
